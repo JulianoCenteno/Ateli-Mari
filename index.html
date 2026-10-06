@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ateliê Mari — Área de Membros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#B23A56;
+    --pink-dark:#8F2C44;
+    --pink-light:#F3D7DA;
+    --pink-lighter:#FBEEEF;
+    --bg:#F7F1E8;
+    --card:#FFFFFF;
+    --ink:#1B2A4C;
+    --ink-soft:#5F6B85;
+    --ink-faint:#A7AFC0;
+    --white:#FFFFFF;
+    --green:#2FAE6B;
+    --shadow-sm:0 4px 14px rgba(27,42,76,.08);
+    --shadow-md:0 10px 30px rgba(27,42,76,.12);
+    --shadow-card:0 10px 22px rgba(27,42,76,.08);
+    --radius-lg:26px;
+    --radius-md:20px;
+    --radius-sm:14px;
+    --radius-pill:999px;
+    --font-serif:'Caveat', cursive;
+    --font-sans:'Lora', Georgia, serif;
+    --sidebar-w:280px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-sans); -webkit-font-smoothing:antialiased;}
+  button{font-family:inherit; border:none; background:none; cursor:pointer;}
+  ul{margin:0; padding:0; list-style:none;}
+  p{margin:0;}
+  h1,h2,h3{font-family:var(--font-serif); font-weight:700; margin:0; color:var(--ink);}
+
+  .shell{display:flex; min-height:100vh;}
+
+  /* ---------- Sidebar (desktop) ---------- */
+  .sidebar{
+    display:none;
+    width:var(--sidebar-w); flex:0 0 auto;
+    background:var(--white); border-right:1px solid var(--pink-light);
+    padding:28px 20px; position:sticky; top:0; height:100vh;
+    flex-direction:column;
+  }
+  .sidebar-brand{margin-bottom:34px; padding-left:6px;}
+  .sidebar-brand .eyebrow{font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--pink-dark); text-transform:uppercase;}
+  .sidebar-brand h1{font-size:30px; margin-top:2px;}
+  .sidebar-nav{display:flex; flex-direction:column; gap:4px;}
+  .nav-item{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:11px 14px; border-radius:var(--radius-sm);
+    font-weight:700; font-size:13.5px; line-height:1.35; color:var(--ink-soft);
+    transition:background .15s, color .15s;
+  }
+  .nav-item:hover{background:var(--pink-lighter);}
+  .nav-item.active{background:var(--pink); color:var(--white);}
+  .nav-item .nav-icon{width:20px; height:20px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .nav-item.active .nav-icon svg{stroke:var(--white); color:var(--white);}
+
+  /* ---------- Main content ---------- */
+  main.content{
+    flex:1; min-width:0;
+    max-width:760px; margin:0 auto;
+    padding:22px 20px 100px;
+  }
+  main.content.wide{max-width:900px;}
+
+  /* ---------- Bottom tabs (mobile) ---------- */
+  .bottom-tabs{
+    position:fixed; bottom:0; left:0; right:0; z-index:50;
+    background:var(--white); border-top:1px solid var(--pink-light);
+    display:flex; justify-content:space-around; padding:8px 4px 10px;
+  }
+  .tab-item{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    color:var(--ink-faint); font-size:10.5px; font-weight:700;
+    padding:4px 6px; border-radius:10px; flex:1;
+  }
+  .tab-item.active{color:var(--pink-dark);}
+  .tab-item .tab-icon{width:20px; height:20px;}
+  .tab-item .tab-icon svg{stroke:currentColor;}
+
+  @media (min-width:880px){
+    .sidebar{display:flex;}
+    .bottom-tabs{display:none;}
+    main.content{padding:40px 40px 60px; margin:0; max-width:640px;}
+    main.content.wide{max-width:820px;}
+  }
+
+  .brand-footer{
+    margin-top:auto; padding-top:20px;
+    display:flex; align-items:center; gap:8px; justify-content:center;
+    color:var(--pink-dark);
+  }
+  .brand-footer .rule{flex:1; height:1px; background:var(--pink-light);}
+  .brand-footer .brand-name{font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; color:var(--pink-dark);}
+  .brand-footer .brand-flower{flex:0 0 auto; display:flex;}
+
+  /* ---------- Hero ---------- */
+  .hero-card{
+    position:relative; overflow:hidden;
+    background:var(--pink-light);
+    background-image:radial-gradient(rgba(178,58,86,.10) 1.5px, transparent 1.5px);
+    background-size:16px 16px;
+    border-radius:var(--radius-lg);
+    padding:30px 26px 34px;
+    color:var(--ink);
+    margin-bottom:30px;
+  }
+  .hero-eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--pink-dark); margin-bottom:6px;}
+  .hero-title{font-size:clamp(32px,8vw,42px); color:var(--ink); line-height:1.1; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .hero-title .heart{color:var(--pink); flex:0 0 auto;}
+  .hero-underline{width:120px; height:8px; margin:6px 0 4px;}
+  .hero-tagline{font-family:var(--font-serif); font-size:19px; color:var(--ink-soft); margin-top:6px;}
+
+  /* ---------- Section title ---------- */
+  .section-label{font-family:var(--font-serif); font-size:23px; font-weight:700; margin-bottom:12px;}
+
+  /* ---------- Access cards (reuses quiz choice-card language) ---------- */
+  .access-list{display:flex; flex-direction:column; gap:12px; margin-bottom:26px;}
+  .access-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--card); border-radius:var(--radius-md);
+    padding:14px 16px; box-shadow:var(--shadow-card);
+    text-align:left; transition:transform .12s, box-shadow .12s;
+  }
+  .access-card:hover{transform:translateY(-1px); box-shadow:var(--shadow-md);}
+  .access-icon{
+    width:44px; height:44px; flex:0 0 auto; border-radius:50%;
+    background:var(--pink-dark); color:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:18px;
+  }
+  .access-icon.light{background:var(--pink-light); color:var(--pink-dark);}
+  .access-body{flex:1; min-width:0;}
+  .access-title{font-weight:700; font-size:15px; color:var(--ink);}
+  .access-sub{font-size:12.5px; color:var(--ink-soft); margin-top:2px; line-height:1.4;}
+  .access-arrow{color:var(--pink); font-size:16px; flex:0 0 auto;}
+
+  /* ---------- Ritual box ---------- */
+  .ritual-box{
+    background:var(--pink-lighter); border:1px solid var(--pink-light);
+    border-radius:var(--radius-md); padding:18px 20px;
+  }
+  .ritual-title{font-family:var(--font-serif); font-weight:700; font-size:23px; color:var(--pink-dark); margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .ritual-text{font-size:13.5px; line-height:1.6; color:var(--ink);}
+
+  /* ---------- Page header (secondary views) ---------- */
+  .page-header{margin-bottom:24px;}
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12.5px; font-weight:700; color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .page-eyebrow{font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--pink-dark); text-transform:uppercase; margin-bottom:6px;}
+  .page-title{font-size:clamp(28px,6.5vw,36px);}
+  .page-sub{font-size:14px; color:var(--ink-soft); margin-top:6px; line-height:1.5;}
+
+  /* ---------- Generic list card (lessons, modules) ---------- */
+  .item-list{display:flex; flex-direction:column; gap:12px;}
+  .item-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--card); border-radius:var(--radius-md);
+    padding:14px; box-shadow:var(--shadow-card);
+  }
+  .item-thumb{
+    width:56px; height:56px; flex:0 0 auto; border-radius:14px;
+    background:linear-gradient(150deg,var(--pink-light),#f7c9dd);
+    display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--pink-dark);
+  }
+  .item-body{flex:1; min-width:0;}
+  .item-title{font-weight:700; font-size:14.5px;}
+  .item-meta{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .item-check{
+    width:26px; height:26px; border-radius:50%; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; font-size:12px;
+  }
+  .item-check.done{background:var(--green); color:var(--white);}
+  .item-check.todo{border:1.5px solid var(--pink-light); color:transparent;}
+
+  /* ---------- Module card (curso / trilha) ---------- */
+  .module-card{
+    display:flex; gap:14px; align-items:flex-start;
+    width:100%; text-align:left;
+    background:var(--card); border-radius:var(--radius-md);
+    padding:16px; box-shadow:var(--shadow-card);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .module-card:hover{transform:translateY(-1px); box-shadow:var(--shadow-md);}
+  .lesson-list{display:flex; flex-direction:column; gap:22px;}
+  .lesson-block{background:var(--card); border-radius:var(--radius-md); box-shadow:var(--shadow-card); padding:20px 22px;}
+  .lesson-title{font-family:var(--font-serif); font-weight:700; font-size:23px; color:var(--pink-dark); margin-bottom:8px;}
+  .lesson-text{font-size:14px; line-height:1.75; color:var(--ink);}
+  .video-embed{position:relative; width:100%; aspect-ratio:16/9; border-radius:var(--radius-sm); overflow:hidden; background:#000;}
+  .video-embed iframe{position:absolute; top:0; left:0; width:100%; height:100%; border:0;}
+  .module-num{
+    width:30px; height:30px; border-radius:50%; flex:0 0 auto;
+    background:var(--pink-dark); color:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13px; margin-top:1px;
+  }
+  .module-title{font-family:var(--font-serif); font-weight:700; font-size:22px; color:var(--pink-dark);}
+  .module-desc{display:block; font-size:13px; color:var(--ink-soft); margin-top:5px; line-height:1.5;}
+  .module-meta{display:block; font-size:11.5px; color:var(--ink-faint); font-weight:700; margin-top:8px;}
+
+  /* ---------- Progress bar ---------- */
+  .progress-block{margin-bottom:24px;}
+  .progress-label{display:flex; justify-content:space-between; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:8px;}
+  .progress-track{height:8px; background:var(--pink-light); border-radius:var(--radius-pill); overflow:hidden;}
+  .progress-fill{height:100%; background:var(--pink); border-radius:var(--radius-pill);}
+
+  /* ---------- Chips (filters) ---------- */
+  .chip-row{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:20px; scrollbar-width:none;}
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:0 0 auto; padding:8px 16px; border-radius:var(--radius-pill);
+    background:var(--card); border:1px solid var(--pink-light);
+    font-size:12.5px; font-weight:700; color:var(--ink-soft); white-space:nowrap;
+  }
+  .chip.active{background:var(--pink); border-color:var(--pink); color:var(--white);}
+
+  /* ---------- Grid (moldes) ---------- */
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  @media (min-width:600px){ .grid{grid-template-columns:repeat(3,1fr);} }
+  @media (min-width:880px){ .grid{grid-template-columns:repeat(4,1fr);} }
+  .grid-card{
+    display:block; background:var(--card); border-radius:var(--radius-md);
+    box-shadow:var(--shadow-card); overflow:hidden;
+    transition:transform .12s, box-shadow .12s;
+  }
+  .grid-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-md);}
+  .grid-thumb{
+    aspect-ratio:1/1; background:linear-gradient(150deg,var(--pink-light),#f7c9dd);
+    display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--pink-dark);
+  }
+  .grid-thumb-link{display:block;}
+  .grid-thumb.img{background:var(--pink-lighter); padding:10px; position:relative; overflow:hidden;}
+  .grid-thumb.img img{width:100%; height:100%; object-fit:contain;}
+  .watermark{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%) rotate(-28deg);
+    font-family:var(--font-serif); font-size:15px; font-weight:700;
+    color:var(--ink); opacity:.16;
+    white-space:nowrap; pointer-events:none; user-select:none;
+  }
+  .grid-card-body{padding:10px 12px 12px;}
+  .grid-label{font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:8px;}
+  .download-btn{
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    width:100%; padding:8px 10px; border-radius:var(--radius-pill);
+    background:var(--pink); color:var(--white);
+    font-size:12px; font-weight:700; letter-spacing:.01em;
+    transition:background .15s, transform .12s;
+  }
+  .download-btn:hover{background:var(--pink-dark); transform:translateY(-1px);}
+
+  /* ---------- Palette cards ---------- */
+  .search-input{
+    width:100%; padding:13px 18px; border-radius:var(--radius-pill);
+    border:1px solid var(--pink-light); background:var(--card);
+    font-family:var(--font-sans); font-size:13.5px; color:var(--ink);
+    margin-bottom:16px; outline:none;
+  }
+  .search-input:focus{border-color:var(--pink);}
+  .palette-list{display:flex; flex-direction:column; gap:10px;}
+  .palette-row{
+    display:flex; align-items:center; gap:14px;
+    background:var(--card); border:1px solid var(--pink-light);
+    border-radius:var(--radius-md); padding:13px 16px;
+  }
+  .palette-row-num{font-size:11.5px; font-weight:700; color:var(--ink-faint); flex:0 0 auto; width:20px;}
+  .palette-row-swatches{display:flex; gap:4px; flex:0 0 auto;}
+  .swatch-dot{width:16px; height:16px; border-radius:50%; border:1px solid rgba(0,0,0,.06);}
+  .palette-row-body{flex:1; min-width:0;}
+  .palette-row-name{font-family:var(--font-sans); font-weight:700; font-size:14.5px; color:var(--ink);}
+  .palette-row-desc{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .fav-star{font-size:18px; color:var(--pink-light); flex:0 0 auto;}
+  .fav-star.active{color:var(--pink);}
+  .empty-state{font-size:13.5px; color:var(--ink-soft); text-align:center; padding:30px 0;}
+
+  /* ---------- Accordion (erros) ---------- */
+  .faq-item{background:var(--card); border:1px solid var(--pink-light); border-radius:var(--radius-sm); overflow:hidden; margin-bottom:10px;}
+  .faq-q{width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 16px; font-weight:700; font-size:14px; text-align:left;}
+  .faq-q .chev{color:var(--pink); font-size:12px; transition:transform .2s;}
+  .faq-item.open .faq-q .chev{transform:rotate(180deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a-inner{padding:0 16px 15px; font-size:13px; line-height:1.6; color:var(--ink-soft);}
+  .faq-a-inner .fix{color:var(--green); font-weight:700;}
+
+  /* ---------- Materiais two-column ---------- */
+  .materiais-cols{display:grid; grid-template-columns:1fr; gap:16px;}
+  @media (min-width:600px){ .materiais-cols{grid-template-columns:1fr 1fr;} }
+  .materiais-box{background:var(--card); border-radius:var(--radius-md); box-shadow:var(--shadow-card); padding:18px;}
+  .materiais-box h3{font-size:14.5px; margin-bottom:12px;}
+  .materiais-box.avoid h3{color:var(--pink-dark);}
+  .materiais-box ul{display:flex; flex-direction:column; gap:9px;}
+  .materiais-box li{display:flex; gap:8px; font-size:13.5px; color:var(--ink);}
+
+  /* ---------- Perfil ---------- */
+  .profile-avatar{
+    width:76px; height:76px; border-radius:50%; background:var(--pink-light);
+    color:var(--pink-dark); display:flex; align-items:center; justify-content:center;
+    font-family:Georgia,serif; font-size:26px; font-weight:700; margin-bottom:14px;
+  }
+  .profile-email{font-size:14px; color:var(--ink-soft); margin-bottom:24px;}
+  .profile-row{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--card); border-radius:var(--radius-md); box-shadow:var(--shadow-card);
+    padding:15px 16px; margin-bottom:10px; font-weight:700; font-size:14px;
+  }
+  .profile-row .arrow{color:var(--pink); font-size:15px;}
+  .profile-row.danger{color:var(--pink-dark);}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="eyebrow">Ateliê Mari</div>
+      <h1>Meu espaço</h1>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+    <div class="brand-footer">
+      <span class="rule"></span>
+      <span class="brand-flower">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="6" r="2.6" fill="currentColor" opacity=".55"/><circle cx="17" cy="9.5" r="2.6" fill="currentColor" opacity=".55"/><circle cx="15" cy="16" r="2.6" fill="currentColor" opacity=".55"/><circle cx="9" cy="16" r="2.6" fill="currentColor" opacity=".55"/><circle cx="7" cy="9.5" r="2.6" fill="currentColor" opacity=".55"/></svg>
+      </span>
+      <span class="brand-name">Mari Nonaka</span>
+      <span class="rule"></span>
+    </div>
+  </aside>
+
+  <main class="content" id="content"></main>
+
+  <nav class="bottom-tabs" id="bottomTabs"></nav>
+</div>
+
+<script>
+/* ================= Icons ================= */
+function icon(name){
+  var icons = {
+    play:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 4l13 8-13 8V4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    home:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5M6 10v9h5v-5h2v5h5v-9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    stitch:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M4 6l16 12M20 6L4 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    diamond:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 9-9 9-9-9 9-9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    palette:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 3a9 9 0 000 18z" fill="currentColor"/></svg>',
+    person:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 20c1.6-3.6 4.8-5.5 7.5-5.5s5.9 1.9 7.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    warning:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 4l9 16H3L12 4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>',
+    check:'<svg width="12" height="10" viewBox="0 0 13 10" fill="none"><path d="M1 5l3.5 3.5L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    back:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    heart:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7.5-4.6-10-9.3C.4 7.2 2.3 4 5.6 4c2 0 3.6 1.1 4.4 2.7C10.8 5.1 12.4 4 14.4 4c3.3 0 5.2 3.2 3.6 6.7C15.5 15.4 12 20 12 20z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+    bulb:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18h6M10 21h4M8 14a5 5 0 117.9 0c-.7.9-1.4 1.7-1.4 2.8H9.5c0-1.1-.7-1.9-1.5-2.8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+    flower:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="6" r="2.6" fill="currentColor" opacity=".55"/><circle cx="17" cy="9.5" r="2.6" fill="currentColor" opacity=".55"/><circle cx="15" cy="16" r="2.6" fill="currentColor" opacity=".55"/><circle cx="9" cy="16" r="2.6" fill="currentColor" opacity=".55"/><circle cx="7" cy="9.5" r="2.6" fill="currentColor" opacity=".55"/></svg>'
+  };
+  return icons[name] || '';
+}
+
+/* ================= Nav config ================= */
+var NAV_MOBILE = [
+  { id:'videos',   label:'Vídeos',   icon:'play' },
+  { id:'inicio',   label:'Início',   icon:'home' },
+  { id:'aprender', label:'Aprender', icon:'stitch' },
+  { id:'moldes',   label:'Moldes',   icon:'diamond' },
+  { id:'paletas',  label:'Paletas',  icon:'palette' },
+  { id:'perfil',   label:'Perfil',   icon:'person' }
+];
+
+var NAV_DESKTOP = [
+  { id:'inicio',   label:'Início',                             icon:'home' },
+  { id:'videos',   label:'Vídeo Aulas',                        icon:'play' },
+  { id:'aprender', label:'Aprenda Bordado Japonês',            icon:'stitch' },
+  { id:'paletas',  label:'30 Paletas de Cores Profissionais',  icon:'palette' },
+  { id:'erros',    label:'Guia de Erros e Correções',          icon:'warning' },
+  { id:'moldes',   label:'Biblioteca de Moldes',          icon:'diamond' },
+  { id:'materiais',label:'Materiais essenciais',                icon:'diamond' },
+  { id:'perfil',   label:'Perfil',                             icon:'person' }
+];
+
+var currentView = 'inicio';
+
+/* ================= Shell render ================= */
+function renderShell(){
+  var sidebarNav = document.getElementById('sidebarNav');
+  sidebarNav.innerHTML = NAV_DESKTOP.map(function(item){
+    return '<button class="nav-item' + (item.id === currentView ? ' active' : '') + '" data-view="' + item.id + '">' +
+      '<span class="nav-icon">' + icon(item.icon) + '</span>' + item.label +
+    '</button>';
+  }).join('');
+
+  var bottomTabs = document.getElementById('bottomTabs');
+  bottomTabs.innerHTML = NAV_MOBILE.map(function(item){
+    return '<button class="tab-item' + (item.id === currentView ? ' active' : '') + '" data-view="' + item.id + '">' +
+      '<span class="tab-icon">' + icon(item.icon) + '</span>' + item.label +
+    '</button>';
+  }).join('');
+
+  document.querySelectorAll('[data-view]').forEach(function(el){
+    el.addEventListener('click', function(){ goToView(el.getAttribute('data-view')); });
+  });
+}
+
+function goToView(id){
+  currentView = id;
+  renderShell();
+  var content = document.getElementById('content');
+  content.className = 'content' + (VIEW_WIDE[id] ? ' wide' : '');
+  content.innerHTML = VIEWS[id] ? VIEWS[id]() : '';
+  bindView(id);
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+var VIEW_WIDE = { moldes:true, paletas:true };
+
+/* ================= Reusable bits ================= */
+function backLink(target, label){
+  target = target || 'inicio';
+  label = label || 'Voltar ao início';
+  return '<button class="back-link" onclick="goToView(\'' + target + '\')">' + icon('back') + ' ' + label + '</button>';
+}
+function pageHeader(title, sub, withBack, eyebrow){
+  return '<div class="page-header">' +
+    (withBack ? backLink(withBack === true ? null : withBack.target, withBack === true ? null : withBack.label) : '') +
+    (eyebrow ? '<div class="page-eyebrow">' + eyebrow + '</div>' : '') +
+    '<h1 class="page-title">' + title + '</h1>' +
+    (sub ? '<p class="page-sub">' + sub + '</p>' : '') +
+  '</div>';
+}
+
+/* ================= VIEWS ================= */
+var VIEWS = {};
+
+VIEWS.inicio = function(){
+  var accessCards = [
+    { icon:'▶', route:'videos',   title:'Vídeo Aulas', sub:'Liberado para todas — assista e borde junto.' },
+    { icon:'刺', route:'aprender', title:'Aprenda Bordado Japonês', sub:'Trilha completa de Sashiko: história, materiais, pontos básicos e projetos práticos.' },
+    { icon:'◐', route:'paletas',  title:'30 Paletas de Cores Profissionais', sub:'Combinações de cores testadas com códigos, sensações e recomendações de peças.' },
+    { icon:'⚠', route:'erros',    title:'Guia de Erros e Correções', sub:'18 erros comuns do bordado japonês com diagnóstico, correção e prevenção.' },
+    { icon:'◆', route:'moldes',   title:'Biblioteca de Moldes', sub:'Moldes prontos para imprimir, transferir e bordar, organizados por categoria.' },
+    { icon:'✦', route:'materiais',title:'Materiais essenciais', sub:'O que ter à mão — e o que evitar.', light:true }
+  ];
+  return '' +
+    '<div class="hero-card">' +
+      '<div class="hero-eyebrow">Ateliê Mari</div>' +
+      '<h1 class="hero-title">Que bom te ver por aqui <span class="heart">' + icon('heart') + '</span></h1>' +
+      '<svg class="hero-underline" viewBox="0 0 120 8" fill="none"><path d="M2 5.5C25 2 70 2 118 5" style="stroke:var(--pink)" stroke-width="2.4" stroke-linecap="round"/></svg>' +
+      '<p class="hero-tagline">do fio, nasce propósito</p>' +
+    '</div>' +
+    '<p class="section-label">Seus acessos</p>' +
+    '<div class="access-list">' +
+      accessCards.map(function(c){
+        return '<button class="access-card" data-route="' + c.route + '">' +
+          '<span class="access-icon' + (c.light ? ' light' : '') + '">' + c.icon + '</span>' +
+          '<span class="access-body">' +
+            '<span class="access-title" style="display:block;">' + c.title + '</span>' +
+            '<span class="access-sub">' + c.sub + '</span>' +
+          '</span>' +
+          '<span class="access-arrow">→</span>' +
+        '</button>';
+      }).join('') +
+    '</div>' +
+    '<div class="ritual-box">' +
+      '<p class="ritual-title">' + icon('bulb') + ' Ritual de hoje</p>' +
+      '<p class="ritual-text">Reserve 15 minutinhos, prepare o linho, respire fundo. O Sashiko é lento — e é essa a beleza dele.</p>' +
+    '</div>';
+};
+function bindInicio(){
+  document.querySelectorAll('[data-route]').forEach(function(el){
+    el.addEventListener('click', function(){ goToView(el.getAttribute('data-route')); });
+  });
+}
+
+VIEWS.videos = function(){
+  var lessons = [
+    ['Boas-vindas: como usar o Ateliê', '4 min', true],
+    ['Introdução ao Bordado Japonês', '9 min', true],
+    ['Preparando o tecido e o bastidor', '7 min', false],
+    ['Ponto reto e ponto corrido (Sashiko)', '11 min', false],
+    ['Transferindo o molde para o tecido', '6 min', false],
+    ['Finalizando e cuidando da sua peça', '8 min', false]
+  ];
+  return pageHeader('Vídeo Aulas', 'Liberado para todas — assista e borde junto, no seu ritmo.') +
+    '<div class="item-list">' +
+      lessons.map(function(l){
+        return '<div class="item-card">' +
+          '<span class="item-thumb">' + icon('play') + '</span>' +
+          '<span class="item-body">' +
+            '<span class="item-title" style="display:block;">' + l[0] + '</span>' +
+            '<span class="item-meta">' + l[1] + '</span>' +
+          '</span>' +
+          '<span class="item-check ' + (l[2] ? 'done' : 'todo') + '">' + (l[2] ? icon('check') : '') + '</span>' +
+        '</div>';
+      }).join('') +
+    '</div>';
+};
+
+var MODULES = [
+  { title:'Boas-vindas', desc:'Uma carta de abertura da Mari e um convite para começar sem pressa.', aulas:[
+    { title:'Uma carta da Mari', content:'Que bom ter você aqui. Se você chegou até esse curso, é porque em algum momento uma peça de Sashiko te parou — talvez pelas linhas brancas sobre o azul-índigo, talvez pela ideia de fazer algo com as próprias mãos, devagar, sem pressa. Eu quero te dizer uma coisa antes de começarmos: você não precisa saber bordar. Não precisa ter pulso firme, nem paciência de monge, nem talento artístico. O Sashiko foi criado por pessoas comuns, remendando roupas de trabalho — não por artistas. Ele é, antes de tudo, um ofício de repetição. E repetição, qualquer uma de nós consegue aprender.' },
+    { title:'Como funciona esse espaço', content:'Esse curso está organizado em 10 módulos, na ordem em que faz mais sentido aprender: primeiro a história e os materiais, depois a preparação do tecido, os pontos básicos, os padrões e, por fim, os projetos práticos e o acabamento. Você pode assistir e ler tudo na ordem, ou pular direto para o que precisar — por exemplo, se você já tem experiência com costura, pode ir direto para os pontos e padrões. Não existe prazo. Volte quantas vezes quiser em qualquer módulo.' },
+    { title:'Seu compromisso com você mesma', content:'A única coisa que peço é que você não busque a perfeição na primeira peça. O primeiro pano que você bordar vai ter pontos desiguais, e está certo que seja assim — é dele que você vai aprender o ritmo da sua própria mão. Guarde essa primeira peça, mesmo torta. Daqui a alguns meses, quando comparar com o que estiver fazendo, ela vai te mostrar o quanto você caminhou.' }
+  ]},
+  { title:'História do Sashiko', desc:'De onde vem essa técnica, o que ela significa e por que ela transforma quem borda.', aulas:[
+    { title:'De onde vem o Sashiko', content:'Sashiko (刺し子, "pequenas perfurações") nasceu no Japão rural, entre os séculos XVII e XIX, em regiões de invernos rigorosos como Tōhoku. Tecido era caro e escasso, então famílias de agricultores e pescadores usavam pontos simples e repetidos para reforçar roupas de trabalho, sobrepor camadas de pano fino e ganhar mais calor e resistência. Não era decoração — era necessidade. Com o tempo, o que começou como remendo funcional foi ganhando padrões geométricos transmitidos de mãe para filha, cada região desenvolvendo seus próprios desenhos.' },
+    { title:'O que o Sashiko significa', content:'Existe uma ideia japonesa chamada "mottainai" — o desconforto de desperdiçar algo que ainda tem valor. O Sashiko nasce exatamente desse espírito: transformar o que já existe (um tecido gasto, uma roupa rasgada) em algo mais forte e, com o tempo, mais bonito. É por isso que tantas pessoas descrevem o Sashiko como algo que "acalma" — não é só o ato repetitivo de bordar, é a lógica por trás dele: cuidar de algo aos poucos, ponto a ponto, sem pressa de terminar.' }
+  ]},
+  { title:'Materiais essenciais', desc:'Tudo o que você precisa (e o que não precisa) para começar.', aulas:[
+    { title:'Tecido — o que usar', content:'O tecido tradicional é o algodão de trama média, como o algodão cru, o "sarja leve" ou o linho fino — eles seguram bem o ponto sem esgarçar. Evite tecidos muito elásticos (como malha) ou muito sintéticos e escorregadios no início, porque dificultam ver e manter o ponto reto. Uma boa opção pra começar é um retalho de algodão liso, de cor escura (índigo, verde-musgo, marrom) — as cores escuras deixam a linha branca bem visível enquanto você aprende.' },
+    { title:'Linha e agulha', content:'A linha de Sashiko é mais grossa e um pouco mais rígida que a linha de bordado comum — isso ajuda a manter os pontos uniformes. Se não encontrar linha específica, uma linha de algodão para crochê fina também funciona bem no início. A agulha de Sashiko é mais longa que uma agulha comum, com um olhal maior — facilita passar a linha grossa e "correr" vários pontos de uma vez antes de puxar, que é a técnica clássica do Sashiko.' },
+    { title:'Bastidor e o que não precisa', content:'Um bastidor de madeira simples, de 15 a 20cm, já é suficiente — ele mantém o tecido esticado e uniforme enquanto você borda. Você também vai precisar de uma tesourinha de ponta fina e, se possível, um lápis ou giz de alfaiate para marcar o desenho. O que você não precisa: máquina de costura, aro grande de bordado profissional, ou qualquer kit caro de "iniciante" — o Sashiko tradicional é propositalmente simples.' }
+  ]},
+  { title:'Preparação do tecido', desc:'Como cortar, lavar, marcar o molde e preparar o bastidor.', aulas:[
+    { title:'Cortando e lavando o tecido', content:'Antes de bordar, lave e passe o tecido — isso remove o amido de fábrica (que dificulta a agulha) e evita que a peça encolha depois de pronta. Corte o tecido sempre um pouco maior do que o tamanho final da peça (uns 3 a 5cm de sobra em cada lado), porque o bastidor precisa de margem para prender, e você vai aparar o excesso só no final.' },
+    { title:'Marcando o molde e preparando o bastidor', content:'Para transferir o molde, você pode usar papel-carbono próprio para tecido, ou simplesmente um lápis bem apontado se o desenho for geométrico e você usar régua. Centralize o desenho no tecido antes de prender no bastidor. Ao encaixar no bastidor, puxe o tecido igualmente pelos quatro lados — ele deve ficar esticado como um tambor, sem estar tão apertado a ponto de distorcer a trama.' }
+  ]},
+  { title:'Pontos básicos', desc:'O ponto reto do Sashiko, ritmo, tensão e uniformidade.', aulas:[
+    { title:'Ponto Básico', type:'video', videoId:'uc6kHJV1gEk' },
+    { title:'O ponto reto do Sashiko', content:'O ponto do Sashiko é, na essência, um ponto corrido (para frente), com pontos e espaços de tamanho igual — geralmente entre 3 e 5mm cada. A diferença para um ponto corrido comum é a consistência: no Sashiko tradicional, "corre-se" a agulha por vários pontos de uma vez, entrando e saindo do tecido em sequência, antes de puxar a linha toda de uma vez.' },
+    { title:'Ritmo e tensão', content:'A tensão certa é aquela que deixa a linha assentar sobre o tecido sem esticar (o que franze o pano) nem ficar frouxa (o que deixa a linha "boiando"). O segredo é puxar a linha sempre na mesma direção e com a mesma força, encontrando um ritmo — muita gente descreve esse momento como o mais relaxante do processo, quase meditativo.' },
+    { title:'Uniformidade', content:'Para manter os pontos do mesmo tamanho, muitas bordadeiras usam o próprio tecido como guia, contando os fios da trama, ou marcam pontos-guia a lápis nas primeiras peças. Não se cobre por uniformidade perfeita logo de início — ela vem com a repetição, não com esforço.' }
+  ]},
+  { title:'Primeiros exercícios', desc:'Linhas retas, grade e curvas — a base de tudo.', aulas:[
+    { title:'Linhas retas', content:'Comece bordando linhas retas simples, de ponta a ponta do tecido, sem nenhum padrão ainda. O objetivo aqui não é o resultado, é treinar a mão a manter o espaçamento entre pontos. Faça isso por pelo menos uma linha inteira antes de avançar.' },
+    { title:'Grade', content:'O próximo passo é cruzar linhas retas horizontais e verticais, formando uma grade — essa é a base geométrica da maioria dos padrões clássicos de Sashiko, incluindo o Asanoha que você vai ver no módulo 7.' },
+    { title:'Curvas', content:'Curvas exigem pontos um pouco menores e mais próximos entre si para acompanhar a linha sem ficar "quadrada". Pratique com uma curva simples, tipo uma onda, antes de partir para padrões com curvas de verdade.' }
+  ]},
+  { title:'Padrões geométricos clássicos', desc:'Asanoha, hitomezashi, moyouzashi.', aulas:[
+    { title:'Asanoha e Hitomezashi', content:'Asanoha ("folha de cânhamo") é talvez o padrão mais reconhecido do Sashiko: uma grade de hexágonos divididos em estrelas de seis pontas, tradicionalmente usado em roupas de bebê por representar crescimento saudável e rápido, como a planta de cânhamo. Hitomezashi ("um ponto") é a técnica mais simples de todas: pontos únicos, alinhados em grade, que combinados formam desenhos maiores — é o melhor padrão para quem está começando.' },
+    { title:'Moyouzashi', content:'Moyouzashi é a técnica usada para padrões mais fluidos e contínuos, onde a linha "corre" por trajetos mais longos antes de repetir. É um pouco mais avançada que o Hitomezashi, mas o resultado visual é mais orgânico — vale praticar depois de já estar confortável com grades simples.' }
+  ]},
+  { title:'Ondas e curvas', desc:'Seigaiha e movimentos fluidos.', aulas:[
+    { title:'Seigaiha', content:'Seigaiha ("ondas do mar azul") é um padrão de meio-círculos sobrepostos, lembrando ondulações do mar — um dos motivos mais antigos e usados em toda a arte têxtil japonesa, não só no Sashiko. Ele representa calma e boa sorte contínua, como ondas que se repetem sem fim.' },
+    { title:'Movimentos fluidos', content:'Depois de dominar o Seigaiha isolado, você pode combiná-lo com outros padrões de curva para criar composições mais ricas — por exemplo, ondas ao fundo com uma flor de cerejeira sobreposta. Esse é um bom exercício de transição antes dos projetos práticos do próximo módulo.' }
+  ]},
+  { title:'Projetos práticos', desc:'Do primeiro pano à almofada finalizada.', aulas:[
+    { title:'Seu primeiro pano', content:'Escolha um padrão simples (Hitomezashi ou Asanoha) e borde um quadrado de 15x15cm do início ao fim. Esse será seu primeiro projeto completo — guarde-o, mesmo com imperfeições, como registro do seu ponto de partida.' },
+    { title:'Transformando em almofada', content:'Com o quadrado bordado pronto, você pode transformá-lo na frente de uma capa de almofada simples, costurando um tecido liso como parte de trás e um zíper ou fechamento de botões.' },
+    { title:'Do rascunho ao projeto finalizado', content:'Reveja o que aprendeu nos módulos anteriores para planejar um segundo projeto, agora escolhendo você mesma o padrão, o tamanho e a cor — esse é o momento de aplicar o que virou repertório seu.' }
+  ]},
+  { title:'Cuidados e acabamento', desc:'Como lavar, guardar e apresentar sua peça.', aulas:[
+    { title:'Como lavar sua peça', content:'Peças de Sashiko devem ser lavadas à mão, em água fria, com sabão neutro, para preservar tanto o tecido quanto a linha bordada. Evite torcer — pressione a água delicadamente entre uma toalha.' },
+    { title:'Como guardar', content:'Guarde peças bordadas dobradas com um papel de seda entre as dobras, em local seco e longe de luz solar direta, que desbota tanto o tecido quanto a linha com o tempo.' },
+    { title:'Como apresentar/emoldurar', content:'Um bastidor de madeira pode virar o próprio quadro da peça — basta manter o tecido esticado nele e pendurar. Para panos maiores, uma moldura simples com vidro também preserva bem o trabalho.' },
+    { title:'Cuidados de longo prazo', content:'Revise peças expostas de tempos em tempos: tecidos podem ressecar e a linha pode afrouxar com o tempo. Um pequeno reforço pontual é normal e faz parte da vida de uma peça de Sashiko — lembre-se, ela nasceu justamente da ideia de remendar e cuidar.' }
+  ]}
+];
+var currentModuleIndex = 0;
+
+VIEWS.aprender = function(){
+  return pageHeader('Aprenda Bordado Japonês', 'Uma trilha para ir do fio ao primeiro pano bordado, sem pressa.', false, 'Curso') +
+    '<div class="item-list">' +
+      MODULES.map(function(m, i){
+        return '<button class="module-card" data-module="' + i + '">' +
+          '<span class="module-num">' + (i + 1) + '</span>' +
+          '<span class="module-body">' +
+            '<span class="module-title" style="display:block;">' + m.title + '</span>' +
+            '<span class="module-desc">' + m.desc + '</span>' +
+            '<span class="module-meta">' + m.aulas.length + ' aula' + (m.aulas.length > 1 ? 's' : '') + '</span>' +
+          '</span>' +
+        '</button>';
+      }).join('') +
+    '</div>';
+};
+
+VIEWS.moduleDetail = function(){
+  var m = MODULES[currentModuleIndex];
+  return pageHeader(m.title, m.desc, { target:'aprender', label:'Voltar à trilha' }, 'Módulo ' + (currentModuleIndex + 1)) +
+    '<div class="lesson-list">' +
+      m.aulas.map(function(a, i){
+        var body = a.type === 'video'
+          ? '<div class="video-embed"><iframe src="https://www.youtube.com/embed/' + a.videoId + '" title="' + a.title + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
+          : '<p class="lesson-text">' + a.content + '</p>';
+        return '<div class="lesson-block">' +
+          '<p class="lesson-title">' + (i + 1) + '. ' + a.title + '</p>' +
+          body +
+        '</div>';
+      }).join('') +
+    '</div>';
+};
+
+var MOLDES = [
+  { cat:"Geométricos", slug:"geometricos", nome:"Grade diagonal", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/8292d36b-b653-477e-999c-a91cdae06ea8/geometricos-01-grade-diagonal.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-01-grade-diagonal" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Losangos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e84b7936-b9f4-48bf-8842-9b337f5ca4ef/geometricos-02-losangos.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-02-losangos" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Losangos concentricos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/59d3728c-15b5-42e1-b505-674d2f6b6f93/geometricos-03-losangos-concentricos.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-03-losangos-concentricos" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Grade triangular", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3a1a42c1-888d-43f9-a305-5b2a2b9f0170/geometricos-04-grade-triangular.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-04-grade-triangular" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Hexagonos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/22c6be8b-7157-4c49-9acf-6aa30f994846/geometricos-05-hexagonos.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-05-hexagonos" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Cubos isometricos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/2976758d-e507-4851-bd57-a7e133e82fd9/geometricos-06-cubos-isometricos.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-06-cubos-isometricos" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Folha canhamo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/8925e158-af88-45d5-937f-f27393631059/geometricos-07-folha-canhamo.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-07-folha-canhamo" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Circulos entrelaçados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0af5357b-57e7-4fab-b2fb-7cff815a2afd/geometricos-08-circulos-entrelacados.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-08-circulos-entrelacados" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Sete tesouros", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0bf8ee5f-2b10-4a69-b053-6c4195a55393/geometricos-09-sete-tesouros.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-09-sete-tesouros" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Ondas geometricas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3596a087-7d79-41aa-9260-e20454625120/geometricos-10-ondas-geometricas.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-10-ondas-geometricas" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Chevron", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/de8dc9e1-3af6-461d-8fd5-6f06150db5d7/geometricos-11-chevron.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-11-chevron" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Chevron duplo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/4eb68262-a60e-43ff-b9ec-9f26c8ca2272/geometricos-12-chevron-duplo.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-12-chevron-duplo" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Labirinto degraus", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/996b5224-aefd-4a77-a77a-8aaaaa93a468/geometricos-13-labirinto-degraus.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-13-labirinto-degraus" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Chave grega", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/2dcf4da9-157e-42a5-8215-45587639fe2a/geometricos-14-chave-grega.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-14-chave-grega" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Grade quadrada", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/49c2dc9a-4bcc-4c05-87e2-8cd0a6f34b59/geometricos-15-grade-quadrada.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-15-grade-quadrada" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Quadrados concentricos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d6e7a13e-ac10-420c-8c13-98879d9ab7fb/geometricos-16-quadrados-concentricos.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-16-quadrados-concentricos" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Quadrados rotacionados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0613273d-29f0-4cc0-b738-03ce48812875/geometricos-17-quadrados-rotacionados.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-17-quadrados-rotacionados" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Estrela oito pontas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/99a96e3c-b960-47d1-8921-669373bf3ca4/geometricos-18-estrela-oito-pontas.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-18-estrela-oito-pontas" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Estrelas em malha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/06e57814-e695-416d-90aa-572e3775223e/geometricos-19-estrelas-em-malha.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-19-estrelas-em-malha" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Kagome", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/84836497-382d-4d22-ad90-f62327483211/geometricos-20-kagome.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-20-kagome" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Espinha de peixe", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/5023c1cc-d55c-48fa-8c21-a7ac348be600/geometricos-21-espinha-de-peixe.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-21-espinha-de-peixe" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Trama cesta", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/42322539-0c49-43f6-8965-495686cd8d2e/geometricos-22-trama-cesta.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-22-trama-cesta" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Retangulos entrelaçados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/67c3911c-6fd9-407d-b89d-35cac08fbc74/geometricos-23-retangulos-entrelacados.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-23-retangulos-entrelacados" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Losangos cruzados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/daf2ae7a-a455-46d3-a347-97a50519995c/geometricos-24-losangos-cruzados.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-24-losangos-cruzados" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Cataventos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/2ccdf657-7923-4e1f-b7f7-c5c7f190d0e1/geometricos-25-cataventos.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-25-cataventos" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Octogonos quadrados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/7b5d6131-bd30-41fb-b953-ceda047ef088/geometricos-26-octogonos-quadrados.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-26-octogonos-quadrados" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Losangos radiantes", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b8a8bfda-b40e-4f89-a4ee-ce822327ba72/geometricos-27-losangos-radiantes.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-27-losangos-radiantes" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Casco tartaruga", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9ffcfa8d-cfc7-4e6b-91d8-a58ebd726108/geometricos-28-casco-tartaruga.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-28-casco-tartaruga" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Faixas entrelaçadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/c6dc6944-22d9-4b55-ad68-84b0f5717a0b/geometricos-29-faixas-entrelacadas.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-29-faixas-entrelacadas" },
+  { cat:"Geométricos", slug:"geometricos", nome:"Roseta modular", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e0eb2190-740d-4adf-9959-36fa1e161940/geometricos-30-roseta-modular.png", url:"https://atelier-mari.lovable.app/moldes/geometricos/geometricos-30-roseta-modular" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Seigaiha classico", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/996a4be0-8a47-4b48-8e2a-1fd3f0848e88/ondas-01-seigaiha-classico.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-01-seigaiha-classico" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Seigaiha compacto", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/2ca40baa-2a89-4af6-a483-9a3e5e8d1c38/ondas-02-seigaiha-compacto.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-02-seigaiha-compacto" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Seigaiha amplo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d4e760dc-a553-4490-ab62-46737e92a0e9/ondas-03-seigaiha-amplo.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-03-seigaiha-amplo" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas alongadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0ecd83a8-ebb5-4ead-aa7a-c0a4bb7a8a9f/ondas-04-ondas-alongadas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-04-ondas-alongadas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas espelhadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/a675e18e-8fda-440f-9c87-02dca9a19fbd/ondas-05-ondas-espelhadas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-05-ondas-espelhadas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas losango", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e996e79f-746a-418c-8a78-7fb6239bf271/ondas-06-ondas-losango.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-06-ondas-losango" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Correntes sinuosas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/53a721de-f833-4f11-aad9-bf0b7868fdb2/ondas-07-correntes-sinuosas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-07-correntes-sinuosas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Correntes cruzadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/dc21c0d8-7552-40ca-b965-f6fed0f73445/ondas-08-correntes-cruzadas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-08-correntes-cruzadas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Gotas repetidas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/fe5d2e68-5acc-4909-b4a1-346a355de08c/ondas-09-gotas-repetidas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-09-gotas-repetidas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Gotas com ondas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d0839518-25e3-4031-9055-df5e3d285c07/ondas-10-gotas-com-ondas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-10-gotas-com-ondas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Aneis de agua", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0a8840fc-90d6-462e-a068-08838b5133bb/ondas-11-aneis-de-agua.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-11-aneis-de-agua" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Aneis deslocados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/c857fc71-8c71-4040-9f1b-259ed37315cf/ondas-12-aneis-deslocados.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-12-aneis-deslocados" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Espirais de agua", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/09ac49f3-2deb-48dc-867d-1967720f82fc/ondas-13-espirais-de-agua.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-13-espirais-de-agua" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Redemoinhos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/783a8803-8c54-4cb9-82ec-f17056d0507b/ondas-14-redemoinhos.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-14-redemoinhos" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Chuva diagonal", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/074dc2e6-024d-433a-981f-74f35829158d/ondas-15-chuva-diagonal.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-15-chuva-diagonal" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Chuva e ondas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/108411d4-526c-4194-8f3e-843c73f3f48c/ondas-16-chuva-e-ondas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-16-chuva-e-ondas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas verticais", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e00b3e20-6354-4771-8c69-325982a270dd/ondas-17-ondas-verticais.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-17-ondas-verticais" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas em grade", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/8a047249-c47e-4379-98ad-ba9a3a04a205/ondas-18-ondas-em-grade.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-18-ondas-em-grade" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Escamas dagua", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b2346c0d-951e-4552-9962-3b9cb9430522/ondas-19-escamas-dagua.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-19-escamas-dagua" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas com gotas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/35e00bcf-434f-4001-ae9d-711d8ed046de/ondas-20-ondas-com-gotas.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-20-ondas-com-gotas" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Rios meandrantes", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/29ba0f3e-c222-4310-a355-d880e3b8c3db/ondas-21-rios-meandrantes.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-21-rios-meandrantes" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Riachos paralelos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/29e21364-42a2-46b8-9eb5-82a728308882/ondas-22-riachos-paralelos.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-22-riachos-paralelos" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Espuma do mar", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/2429d4c8-385e-428d-a5bb-862c73f57a63/ondas-23-espuma-do-mar.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-23-espuma-do-mar" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Mare modular", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/04e48bd0-9d50-4c49-995c-028adcdba194/ondas-24-mare-modular.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-24-mare-modular" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas em leque", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/52b6ca9b-7203-4541-9012-2e928a0d325e/ondas-25-ondas-em-leque.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-25-ondas-em-leque" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Conchas dagua", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/c0c298b5-1ab7-4c79-bee3-c6cde1e6e277/ondas-26-conchas-dagua.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-26-conchas-dagua" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Ondas hexagonais", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3e4bc30d-5d4d-4b85-9384-7f0c509a4ef3/ondas-27-ondas-hexagonais.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-27-ondas-hexagonais" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Gotas em malha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/5a0c46f2-d0c7-495d-9764-5dd8d2d4bd50/ondas-28-gotas-em-malha.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-28-gotas-em-malha" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Chuva suave", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d59ba25c-553f-4bb6-904b-19d2aef678a2/ondas-29-chuva-suave.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-29-chuva-suave" },
+  { cat:"Ondas & Águas", slug:"ondas", nome:"Oceano abstrato", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e7206409-4a2e-4a97-9d3f-628431dca9ae/ondas-30-oceano-abstrato.png", url:"https://atelier-mari.lovable.app/moldes/ondas/ondas-30-oceano-abstrato" },
+  { cat:"Florais", slug:"florais", nome:"Sakura simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/5816bf9f-df2a-47b1-862a-203050ecc95f/florais-01-sakura-simples.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-01-sakura-simples" },
+  { cat:"Florais", slug:"florais", nome:"Sakura malha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e8ed7fb0-8e2e-4e39-8550-391874e0491b/florais-02-sakura-malha.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-02-sakura-malha" },
+  { cat:"Florais", slug:"florais", nome:"Ameixeira", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/23834da1-8fa0-41ba-adab-3b43bfd8e62d/florais-03-ameixeira.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-03-ameixeira" },
+  { cat:"Florais", slug:"florais", nome:"Crisantemo simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/1b2ce911-ff31-4726-aa51-d3463bf12f8b/florais-04-crisantemo-simples.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-04-crisantemo-simples" },
+  { cat:"Florais", slug:"florais", nome:"Crisantemo repetido", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/afc5b5ba-a9d3-4b9e-936c-dc6679d404f2/florais-05-crisantemo-repetido.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-05-crisantemo-repetido" },
+  { cat:"Florais", slug:"florais", nome:"Camelia", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/182c6988-bac4-4b5c-bec5-4eb749029695/florais-06-camelia.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-06-camelia" },
+  { cat:"Florais", slug:"florais", nome:"Folhas simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/16f18773-af51-42bd-bba4-c139af8658d1/florais-07-folhas-simples.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-07-folhas-simples" },
+  { cat:"Florais", slug:"florais", nome:"Folhas alternadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6a3ff0e8-0a73-499e-8008-f28cd83a18b8/florais-08-folhas-alternadas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-08-folhas-alternadas" },
+  { cat:"Florais", slug:"florais", nome:"Trevo floral", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d60a956e-44b5-47ce-afb3-7ad536bef937/florais-09-trevo-floral.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-09-trevo-floral" },
+  { cat:"Florais", slug:"florais", nome:"Roseta seis petalas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/efaee9bb-edd0-4aad-8fea-6c7a3129b22e/florais-10-roseta-seis-petalas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-10-roseta-seis-petalas" },
+  { cat:"Florais", slug:"florais", nome:"Roseta dupla", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/a8fa7829-2e3b-41ff-bbca-c91652da83d0/florais-11-roseta-dupla.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-11-roseta-dupla" },
+  { cat:"Florais", slug:"florais", nome:"Bambu geometrico", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/a9f2b017-7095-47c9-9e2b-acccb905c3f9/florais-12-bambu-geometrico.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-12-bambu-geometrico" },
+  { cat:"Florais", slug:"florais", nome:"Vinha floral", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e08214b3-6712-47ae-af29-3b0084aaa13c/florais-13-vinha-floral.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-13-vinha-floral" },
+  { cat:"Florais", slug:"florais", nome:"Vinhas verticais", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9bfbb508-4d99-488d-ab84-fb822dd9786f/florais-14-vinhas-verticais.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-14-vinhas-verticais" },
+  { cat:"Florais", slug:"florais", nome:"Tulipas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/53575231-efa6-4b4c-90c8-9905ee3003e9/florais-15-tulipas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-15-tulipas" },
+  { cat:"Florais", slug:"florais", nome:"Botoes florais", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/5dfcce7c-6b57-4d18-902d-1f8cc163ef70/florais-16-botoes-florais.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-16-botoes-florais" },
+  { cat:"Florais", slug:"florais", nome:"Margaridas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/ff8f90b4-5774-4f47-a61e-2db29d6895dc/florais-17-margaridas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-17-margaridas" },
+  { cat:"Florais", slug:"florais", nome:"Flores estreladas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e5d5737b-927f-4b50-a46d-c85aaaa3b760/florais-18-flores-estreladas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-18-flores-estreladas" },
+  { cat:"Florais", slug:"florais", nome:"Flor e folha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6e80ce76-23c8-44a6-a441-10232d8e632a/florais-19-flor-e-folha.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-19-flor-e-folha" },
+  { cat:"Florais", slug:"florais", nome:"Hortensia geometrica", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/14574b1a-456f-4470-a1d1-05c8014a68f0/florais-20-hortensia-geometrica.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-20-hortensia-geometrica" },
+  { cat:"Florais", slug:"florais", nome:"Lotus simplificado", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/eb3086d2-021f-4649-837f-b925e427d952/florais-21-lotus-simplificado.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-21-lotus-simplificado" },
+  { cat:"Florais", slug:"florais", nome:"Padrao brotos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/71c6a8eb-96a3-436d-9d24-6fe76b72b4cb/florais-22-padrao-brotos.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-22-padrao-brotos" },
+  { cat:"Florais", slug:"florais", nome:"Sakura em ramos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/711619d7-aef7-4e05-b47d-141be8d435a9/florais-23-sakura-em-ramos.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-23-sakura-em-ramos" },
+  { cat:"Florais", slug:"florais", nome:"Petalas sobrepostas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d223d04e-2a80-4c45-835b-4a6c220bf874/florais-24-petalas-sobrepostas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-24-petalas-sobrepostas" },
+  { cat:"Florais", slug:"florais", nome:"Ramos de folhas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/eb44b1d8-5bb5-4ca1-96d6-51a51b565d85/florais-25-ramos-de-folhas.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-25-ramos-de-folhas" },
+  { cat:"Florais", slug:"florais", nome:"Mandala floral", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/41c1becc-6864-4639-b797-88a74a8aa354/florais-26-mandala-floral.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-26-mandala-floral" },
+  { cat:"Florais", slug:"florais", nome:"Flores em quadricula", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/2efa6bfe-fa68-4425-870e-ef467d2ebb57/florais-27-flores-em-quadricula.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-27-flores-em-quadricula" },
+  { cat:"Florais", slug:"florais", nome:"Grinalda floral", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/1cb9bb73-4aab-410e-a9b2-e25b4a1b225f/florais-28-grinalda-floral.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-28-grinalda-floral" },
+  { cat:"Florais", slug:"florais", nome:"Mini flores", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/37b76e7d-2ca7-4bab-88e2-4ae4144989dc/florais-29-mini-flores.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-29-mini-flores" },
+  { cat:"Florais", slug:"florais", nome:"Composicao floral japonesa", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9b39b7fc-9304-41a3-803a-a20b57bba66d/florais-30-composicao-floral-japonesa.png", url:"https://atelier-mari.lovable.app/moldes/florais/florais-30-composicao-floral-japonesa" },
+  { cat:"Natureza", slug:"natureza", nome:"Montanhas simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/7da5a4b4-6139-4dfb-9dc3-8146df54bf3f/natureza-01-montanhas-simples.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-01-montanhas-simples" },
+  { cat:"Natureza", slug:"natureza", nome:"Montanhas malha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/841d7bf1-d73b-400c-9f03-2747f26b5f18/natureza-02-montanhas-malha.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-02-montanhas-malha" },
+  { cat:"Natureza", slug:"natureza", nome:"Pinheiros geometricos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9e7509ca-250a-4007-b747-c7b87102427e/natureza-03-pinheiros-geometricos.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-03-pinheiros-geometricos" },
+  { cat:"Natureza", slug:"natureza", nome:"Bambu vertical", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/eb0ec967-98c4-4e01-b3b7-486cca545ec4/natureza-04-bambu-vertical.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-04-bambu-vertical" },
+  { cat:"Natureza", slug:"natureza", nome:"Bambu inclinado", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/5cf37295-6283-4f9b-8db1-36d180950b57/natureza-05-bambu-inclinado.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-05-bambu-inclinado" },
+  { cat:"Natureza", slug:"natureza", nome:"Folhas repetidas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/557f036c-0887-463a-887c-39384855811c/natureza-06-folhas-repetidas.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-06-folhas-repetidas" },
+  { cat:"Natureza", slug:"natureza", nome:"Folhas em galhos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/551365b6-6c65-4041-b5f4-5145653eef85/natureza-07-folhas-em-galhos.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-07-folhas-em-galhos" },
+  { cat:"Natureza", slug:"natureza", nome:"Ginkgo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6de5a976-9ce4-460d-8834-77971fcd6572/natureza-08-ginkgo.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-08-ginkgo" },
+  { cat:"Natureza", slug:"natureza", nome:"Nuvens simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d40e11f5-c65f-486f-9954-381c0aae71fc/natureza-09-nuvens-simples.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-09-nuvens-simples" },
+  { cat:"Natureza", slug:"natureza", nome:"Nuvens japonesas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9b2ad497-5cc4-491f-b881-a3c7f0c71b6b/natureza-10-nuvens-japonesas.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-10-nuvens-japonesas" },
+  { cat:"Natureza", slug:"natureza", nome:"Gotas e chuva", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/22e3deaf-4d2c-4db1-bf64-c8f2ab7a23b3/natureza-11-gotas-e-chuva.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-11-gotas-e-chuva" },
+  { cat:"Natureza", slug:"natureza", nome:"Chuva diagonal", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/4873a454-fad5-4b3b-a00e-d8d3df740b23/natureza-12-chuva-diagonal.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-12-chuva-diagonal" },
+  { cat:"Natureza", slug:"natureza", nome:"Sol radiante", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/a80ee732-83fa-4bca-8cca-8303c44f0726/natureza-13-sol-radiante.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-13-sol-radiante" },
+  { cat:"Natureza", slug:"natureza", nome:"Luas crescentes", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3fdbf06c-7189-4fc8-bb9e-0bc20d5e781a/natureza-14-luas-crescentes.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-14-luas-crescentes" },
+  { cat:"Natureza", slug:"natureza", nome:"Sol e lua", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/c1ff487f-25c3-4878-96c0-d092a392a9cc/natureza-15-sol-e-lua.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-15-sol-e-lua" },
+  { cat:"Natureza", slug:"natureza", nome:"Vento espiral", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/49583331-8e39-4233-a4e3-5331583963fc/natureza-16-vento-espiral.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-16-vento-espiral" },
+  { cat:"Natureza", slug:"natureza", nome:"Vento em linhas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/147dd379-3f0d-497f-8214-fe2fb599cfef/natureza-17-vento-em-linhas.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-17-vento-em-linhas" },
+  { cat:"Natureza", slug:"natureza", nome:"Rio meandrante", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/f2a99439-0a59-418f-ab13-b628a466c630/natureza-18-rio-meandrante.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-18-rio-meandrante" },
+  { cat:"Natureza", slug:"natureza", nome:"Riachos paralelos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/62ffb1b1-b3d7-4d1d-b9f9-5eec76d83cd7/natureza-19-riachos-paralelos.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-19-riachos-paralelos" },
+  { cat:"Natureza", slug:"natureza", nome:"Pedras de rio", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6cda54b1-b831-4afa-bc98-079deed4caeb/natureza-20-pedras-de-rio.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-20-pedras-de-rio" },
+  { cat:"Natureza", slug:"natureza", nome:"Conchas e ondas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d5163139-2b06-4a0c-bff7-daebdfeec0b0/natureza-21-conchas-e-ondas.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-21-conchas-e-ondas" },
+  { cat:"Natureza", slug:"natureza", nome:"Gramineas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/f57e1c1a-9878-41a1-8b7c-29c153b02191/natureza-22-gramineas.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-22-gramineas" },
+  { cat:"Natureza", slug:"natureza", nome:"Folhas de bordo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/8e282c89-8b30-4d78-94e3-193ce4e028fb/natureza-23-folhas-de-bordo.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-23-folhas-de-bordo" },
+  { cat:"Natureza", slug:"natureza", nome:"Ceu noturno", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0804162c-6823-4d39-bdcd-83170672a755/natureza-24-ceu-noturno.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-24-ceu-noturno" },
+  { cat:"Natureza", slug:"natureza", nome:"Nuvens e vento", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b3ef37f5-817e-45c0-a065-e51163ec8568/natureza-25-nuvens-e-vento.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-25-nuvens-e-vento" },
+  { cat:"Natureza", slug:"natureza", nome:"Colinas suaves", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/ca102eb4-a9d4-4273-b673-a51a24a50746/natureza-26-colinas-suaves.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-26-colinas-suaves" },
+  { cat:"Natureza", slug:"natureza", nome:"Passaros abstratos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/fffa6501-1bed-4c7d-909b-70e84ccaf622/natureza-27-passaros-abstratos.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-27-passaros-abstratos" },
+  { cat:"Natureza", slug:"natureza", nome:"Pinhas estilizadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/76004390-fcf6-4cff-8f8d-2ebf005115c4/natureza-28-pinhas-estilizadas.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-28-pinhas-estilizadas" },
+  { cat:"Natureza", slug:"natureza", nome:"Montanhas e sol", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/384c4704-4ca4-4e79-b41f-99c8696a8d74/natureza-29-montanhas-e-sol.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-29-montanhas-e-sol" },
+  { cat:"Natureza", slug:"natureza", nome:"Composicao natureza japonesa", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/482cbc5a-a68d-4108-841f-042b4573d938/natureza-30-composicao-natureza-japonesa.png", url:"https://atelier-mari.lovable.app/moldes/natureza/natureza-30-composicao-natureza-japonesa" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Tomoe triplo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/a28ed2c9-fe2c-4905-8574-032bcc1ec538/simbolos-01-tomoe-triplo.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-01-tomoe-triplo" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Kikko simbolico", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/86f72e41-b3d7-44ce-86e8-2975d6a4ba14/simbolos-02-kikko-simbolico.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-02-kikko-simbolico" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Leques japoneses", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/97a765d0-b40c-4dd4-ba95-a7096fc590d7/simbolos-03-leques-japoneses.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-03-leques-japoneses" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Moedas da sorte", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/10ddc0da-bf1d-427d-87bd-7bafcea3931f/simbolos-04-moedas-da-sorte.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-04-moedas-da-sorte" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"No mizuhiki", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6db9da2c-3b00-4470-bcc4-25ba46cb44d5/simbolos-05-no-mizuhiki.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-05-no-mizuhiki" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Torii repetido", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/a87fbaca-e231-44ec-b6ee-8bee45e2d845/simbolos-06-torii-repetido.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-06-torii-repetido" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Pagodas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b5e5a74e-564b-440a-b8b1-aa0416f8b1b7/simbolos-07-pagodas.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-07-pagodas" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Tsuru estilizado", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3c150307-af07-4a7c-a94e-2c6a5ac6a616/simbolos-08-tsuru-estilizado.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-08-tsuru-estilizado" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Taiko", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3763f302-be07-4cf4-ba78-f38c85982a7f/simbolos-09-taiko.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-09-taiko" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Emblema losango", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b5da5c1a-2fa5-4139-91c5-29e2f2463f7d/simbolos-10-emblema-losango.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-10-emblema-losango" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Hisago", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9e92b7e7-b02b-4d92-932f-e9ca357a4a4d/simbolos-11-hisago.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-11-hisago" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Nuvem tradicional", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0a0f9f4b-12d3-4715-9997-e68016032020/simbolos-12-nuvem-tradicional.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-12-nuvem-tradicional" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Sol nascente", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/72a54bd4-ed4d-4911-a3c4-29befb416a46/simbolos-13-sol-nascente.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-13-sol-nascente" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Raio simbolico", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/33d6b071-7031-4c84-b07c-c883579dd383/simbolos-14-raio-simbolico.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-14-raio-simbolico" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Torii e sol", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/c59ac2bd-b0e3-416e-899e-42acccfaaf98/simbolos-15-torii-e-sol.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-15-torii-e-sol" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Pagoda e nuvens", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/fc2f3cb7-c97e-446d-b5a3-6380df7d8edd/simbolos-16-pagoda-e-nuvens.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-16-pagoda-e-nuvens" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Guindastes em voo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/abf9de6d-b3b9-42b2-a730-fd3493358244/simbolos-17-guindastes-em-voo.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-17-guindastes-em-voo" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Leques sobrepostos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/50287f06-9e59-47f6-ba11-b524fc169865/simbolos-18-leques-sobrepostos.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-18-leques-sobrepostos" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Tomoe circulo", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/ae4ab8fd-ee99-4b2a-bf56-f635b424555f/simbolos-19-tomoe-circulo.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-19-tomoe-circulo" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Moedas em malha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/212d207b-91c5-4292-8935-9f565cf30cb1/simbolos-20-moedas-em-malha.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-20-moedas-em-malha" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Leque e no", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/45c70618-953f-4afb-9d8f-ef6648169e7d/simbolos-21-leque-e-no.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-21-leque-e-no" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Kikko e sol", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/314702ad-bbd9-4e36-a64d-e19778ed1258/simbolos-22-kikko-e-sol.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-22-kikko-e-sol" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Tambores e raios", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/f59e74e5-25e1-4fde-a29b-9098ffd750db/simbolos-23-tambores-e-raios.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-23-tambores-e-raios" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Hisago em ramos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/f3318d14-acf3-4a8b-a5c1-4d6fa878db71/simbolos-24-hisago-em-ramos.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-24-hisago-em-ramos" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Torii em trilha", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/0e6db87f-b05f-455f-860a-e49db090fa63/simbolos-25-torii-em-trilha.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-25-torii-em-trilha" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Pagoda ornamental", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/fc16a72f-4651-4bed-85d2-8e3ef9b4e9ca/simbolos-26-pagoda-ornamental.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-26-pagoda-ornamental" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Selo tradicional", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/28ca423a-2020-4666-b86c-986557329bc5/simbolos-27-selo-tradicional.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-27-selo-tradicional" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Nuvens e sol nascente", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3bd94563-93ef-4ae2-8c89-e2740adaa5cb/simbolos-28-nuvens-e-sol-nascente.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-28-nuvens-e-sol-nascente" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Composicao de simbolos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e1210a4e-13f3-46fb-b49e-84410dffc77a/simbolos-29-composicao-de-simbolos.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-29-composicao-de-simbolos" },
+  { cat:"Símbolos Tradicionais", slug:"simbolos", nome:"Composicao tradicional japonesa", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/3a16efd2-8f5d-47d6-af2c-49e6eb9acf03/simbolos-30-composicao-tradicional-japonesa.png", url:"https://atelier-mari.lovable.app/moldes/simbolos/simbolos-30-composicao-tradicional-japonesa" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Dupla simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/aab7cf30-523d-42c5-ac79-b60686cbc43c/bordas-01-dupla-simples.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-01-dupla-simples" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Cantos losango", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/7c1294a2-4b14-43ad-8da1-68a03b70739f/bordas-02-cantos-losango.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-02-cantos-losango" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Cantos quadrados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/46639764-6ba5-4837-bac1-f52674f9af12/bordas-03-cantos-quadrados.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-03-cantos-quadrados" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Ondas borda", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/ca63fb42-89cf-42b1-8253-e57f73acc314/bordas-04-ondas-borda.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-04-ondas-borda" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Triangulos serrilhados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/127aeb7f-0bae-44c7-9810-a5f99834b1d0/bordas-05-triangulos-serrilhados.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-05-triangulos-serrilhados" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Grega", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/fbe084e9-bcad-4657-8303-35ab06432d0d/bordas-06-grega.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-06-grega" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Circulos sequencia", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e6a3a773-deb5-4ebc-a54f-b42e917faabe/bordas-07-circulos-sequencia.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-07-circulos-sequencia" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Hexagonos borda", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/393a210b-a012-4607-bcc0-0454c2bcc0cc/bordas-08-hexagonos-borda.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-08-hexagonos-borda" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Folhas delicadas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/c786fbc0-57a3-4372-a090-9fcfee166374/bordas-09-folhas-delicadas.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-09-folhas-delicadas" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Sakura cantos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/ce018f67-e9f4-4bed-983f-b491c0ea4c9a/bordas-10-sakura-cantos.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-10-sakura-cantos" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Diagonal", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/9d125662-b6eb-4b84-a3d0-8750c043a02a/bordas-11-diagonal.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-11-diagonal" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Losangos corridos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/7d83a5ba-1e4f-40c4-8e4d-f1f28c0d7a84/bordas-12-losangos-corridos.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-12-losangos-corridos" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Quadrados alternados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/fc685942-1644-460b-865e-ad42279bd634/bordas-13-quadrados-alternados.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-13-quadrados-alternados" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Escamas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/af374711-a7fa-4323-99fb-a0c00afba07a/bordas-14-escamas.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-14-escamas" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Canto mandala", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/968da3df-45a2-4f14-ac61-7f84495190d8/bordas-15-canto-mandala.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-15-canto-mandala" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Barras simples", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/953e1af3-5d08-46b8-a3de-43a58bdea0ce/bordas-16-barras-simples.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-16-barras-simples" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Ondas diamantes", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/ce85d4ad-37ce-44dd-8e05-9fd753e0a9c1/bordas-17-ondas-diamantes.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-17-ondas-diamantes" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Leques", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/e3fae54e-8101-423d-bc45-911e40d4a0f5/bordas-18-leques.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-18-leques" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Kikko borda", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/4b992ad8-3bc6-41c9-94d9-b7fd707a198b/bordas-19-kikko-borda.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-19-kikko-borda" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Cantos longos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/cbbd191f-6250-4640-95ec-cdc08197d171/bordas-20-cantos-longos.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-20-cantos-longos" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Petalas continuas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6018cc86-68de-41c9-ab3b-280e5cbf405d/bordas-21-petalas-continuas.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-21-petalas-continuas" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Tripla ponteada", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/8863c4c9-b1c3-4b15-b54f-5771797e9e70/bordas-22-tripla-ponteada.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-22-tripla-ponteada" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Labirinto canto", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/d8ae243d-dcaf-44d9-9281-2e2778ffd0f5/bordas-23-labirinto-canto.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-23-labirinto-canto" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Gotas ramos", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b7144b47-e7b2-46a6-affc-9dac842461f8/bordas-24-gotas-ramos.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-24-gotas-ramos" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Corrente", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/b890349e-9e89-475d-b2a9-bcbe58b20c98/bordas-25-corrente.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-25-corrente" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Colunas floridas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/da60c4ef-75a5-42fb-b675-542e8cea0c5c/bordas-26-colunas-floridas.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-26-colunas-floridas" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Colinas", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/6510270f-61f2-46b2-83cf-8d5776786d3e/bordas-27-colinas.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-27-colinas" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Cantos detalhados", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/4d55956f-c807-45f3-9e36-20a565782690/bordas-28-cantos-detalhados.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-28-cantos-detalhados" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Textil", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/69440da6-1b2f-4af2-8ab1-eeebdc72471c/bordas-29-textil.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-29-textil" },
+  { cat:"Bordas & Molduras", slug:"bordas", nome:"Ornamental", img:"https://atelier-mari.lovable.app/__l5e/assets-v1/f7ff1316-2075-4aa7-9750-6682d2e277f2/bordas-30-ornamental.png", url:"https://atelier-mari.lovable.app/moldes/bordas/bordas-30-ornamental" }
+];
+var moldesCategoria = 'Todos';
+var moldesFiltro = '';
+
+VIEWS.moldes = function(){
+  var categorias = ['Todos'].concat(Array.from(new Set(MOLDES.map(function(m){ return m.cat; }))));
+  return pageHeader('Biblioteca de Moldes', MOLDES.length + ' moldes prontos para imprimir, transferir e bordar, organizados por categoria.') +
+    '<input class="search-input" id="moldeSearch" type="text" placeholder="Buscar molde pelo nome..." value="' + moldesFiltro + '">' +
+    '<div class="chip-row">' +
+      categorias.map(function(c){ return '<span class="chip' + (c === moldesCategoria ? ' active' : '') + '" data-cat="' + c + '">' + c + '</span>'; }).join('') +
+    '</div>' +
+    '<div class="grid" id="moldesGrid"></div>';
+};
+
+function renderMoldesGrid(){
+  var termo = moldesFiltro.toLowerCase();
+  var lista = MOLDES.filter(function(m){
+    var matchesCat = moldesCategoria === 'Todos' || m.cat === moldesCategoria;
+    var matchesTermo = m.nome.toLowerCase().indexOf(termo) > -1;
+    return matchesCat && matchesTermo;
+  });
+  var gridEl = document.getElementById('moldesGrid');
+  if(!gridEl) return;
+  if(lista.length === 0){
+    gridEl.innerHTML = '<p class="empty-state">Nenhum molde encontrado.</p>';
+    return;
+  }
+  gridEl.innerHTML = lista.map(function(m){
+    var filename = m.slug + '-' + m.nome.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.png';
+    return '<div class="grid-card">' +
+      '<a class="grid-thumb-link" href="' + m.url + '" target="_blank" rel="noopener noreferrer">' +
+        '<div class="grid-thumb img">' +
+          '<img src="' + m.img + '" alt="' + m.nome + '" loading="lazy">' +
+          '<span class="watermark">Ateliê Mari</span>' +
+        '</div>' +
+      '</a>' +
+      '<div class="grid-card-body">' +
+        '<span class="grid-label" style="display:block;">' + m.nome + '</span>' +
+        '<a class="download-btn" href="' + m.img + '" download="' + filename + '" target="_blank" rel="noopener noreferrer">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          ' Baixar' +
+        '</a>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+var PALETAS = [
+  { name:'Índigo Clássico', desc:'Tradicional, atemporal', colors:['#c9cbd0','#dfe0e3','#1c2b4a','#0d1b33'] },
+  { name:'Sakura Suave', desc:'Delicado, primaveril, poético', colors:['#f6d6de','#f0b8c8','#c98a9c','#7a4a56'] },
+  { name:'Névoa Serena', desc:'Contemporâneo, minimalista', colors:['#2e3b52','#5a6b85','#a9b4c4'] },
+  { name:'Amanhecer Âmbar', desc:'Cálido, envolvente', colors:['#d98a4a','#e8b979','#c96a4a'] },
+  { name:'Musgo & Pedra', desc:'Natural, terroso, robusto', colors:['#3c4a34','#5d7052','#94a887','#c9c2b4'] },
+  { name:'Verde Bandeira', desc:'Vibrante, viva, jovem', colors:['#2f5233','#4d7a4a','#8fae6b'] },
+  { name:'Chá Matcha', desc:'Zen, meditativo', colors:['#6b7a4a','#94a56b','#c4cf9f'] },
+  { name:'Onda do Mar', desc:'Fluida, refrescante', colors:['#254a5c','#3f7285','#8fbcc9'] },
+  { name:'Pôr do Sol', desc:'Quente, contemporâneo', colors:['#b8483a','#d97a4a','#e8b070'] },
+  { name:'Campina & Neve', desc:'Suave, delicado', colors:['#e8d9dc','#c9a8b0','#7a8a7a'] },
+  { name:'Céu de Kyoto', desc:'Suave, silencioso', colors:['#8a9bb0','#c4d0dc'] },
+  { name:'Terra Vermelha', desc:'Forte, ancestral', colors:['#7a2f2a','#a8493a','#c97a5e'] },
+  { name:'Preto & Branco', desc:'Elegante, atemporal', colors:['#1a1a1a','#f5f5f0'] },
+  { name:'Areia & Ouro', desc:'Luxuosa, quente', colors:['#d9c49a','#c9a25e','#8a6a3a'] },
+  { name:'Verde Floresta', desc:'Enraizado, orgânico', colors:['#1f3a2a','#3f5c3f','#7a9a6b'] },
+  { name:'Rosa & Índigo', desc:'Contraste suave, moderno', colors:['#e8b8c4','#2e3b52'] },
+  { name:'Azul Profundo', desc:'Reflexivo, quente', colors:['#16233f','#2f4a7a','#c9a25e'] },
+  { name:'Vinho & Cobre', desc:'Sofisticado, quente', colors:['#5c1f2f','#8a3a2f','#c97a4a'] },
+  { name:'Lavanda', desc:'Suave, minimalista', colors:['#c9bfe0','#a89bc9'] },
+  { name:'Inverno ao Meio-dia', desc:'Quente, harmonioso', colors:['#9aa8b8','#d9c49a','#e8e0d0'] },
+  { name:'Céu Nublado', desc:'Melancólico, poético', colors:['#7a8494','#a8b0bc','#d4d8de'] },
+  { name:'Trigo Dourado', desc:'Delicada, minimalista', colors:['#e0c078','#c9a25e','#8a6a3a'] },
+  { name:'Coral & Marinho', desc:'Original, marítimo', colors:['#e07a6b','#16233f'] },
+  { name:'Bretanha', desc:'Boêmia, minimalista', colors:['#2e3b52','#c94a4a','#f5f0e6'] },
+  { name:'Osso & Preto', desc:'Dramático, moderno', colors:['#e8e0d0','#1a1a1a'] },
+  { name:'Musgo Fosco', desc:'Elegante, atemporal', colors:['#3f4a3a','#6b7a5e','#a8ae94'] },
+  { name:'Púrpura Real', desc:'Nobre, refinado', colors:['#4a2f5c','#7a4a8a','#c9a2d9'] },
+  { name:'Terracota Antiga', desc:'Aconchegante, acolhedora', colors:['#8a4a3a','#c17a5e','#e0a98d'] },
+  { name:'Névoa da Manhã', desc:'Sutil, contemplativo', colors:['#d4d8de','#a9b4c4','#7a8494'] },
+  { name:'Fogo Sagrado', desc:'Intensa, poderosa', colors:['#7a1f1f','#b8483a','#e8b070'] }
+];
+var favoritos = {};
+var paletaFiltro = '';
+var paletaAba = 'todos';
+
+VIEWS.paletas = function(){
+  return pageHeader('Paletas', '30+ combinações profissionais para inspirar sua próxima peça.') +
+    '<input class="search-input" id="paletaSearch" type="text" placeholder="Buscar por nome, sensação ou categoria..." value="' + paletaFiltro + '">' +
+    '<div class="chip-row">' +
+      '<span class="chip' + (paletaAba === 'todos' ? ' active' : '') + '" data-aba="todos">Todos</span>' +
+      '<span class="chip' + (paletaAba === 'favoritos' ? ' active' : '') + '" data-aba="favoritos">★ Favoritos</span>' +
+    '</div>' +
+    '<div class="palette-list" id="paletaList"></div>';
+};
+
+function renderPaletaList(){
+  var termo = paletaFiltro.toLowerCase();
+  var lista = PALETAS.map(function(p, i){ return { p:p, i:i }; }).filter(function(item){
+    var matchesTermo = item.p.name.toLowerCase().indexOf(termo) > -1 || item.p.desc.toLowerCase().indexOf(termo) > -1;
+    var matchesAba = paletaAba === 'todos' || favoritos[item.i];
+    return matchesTermo && matchesAba;
+  });
+  var listEl = document.getElementById('paletaList');
+  if(!listEl) return;
+  if(lista.length === 0){
+    listEl.innerHTML = '<p class="empty-state">Nenhuma paleta encontrada.</p>';
+    return;
+  }
+  listEl.innerHTML = lista.map(function(item){
+    var num = String(item.i + 1).padStart(2, '0');
+    var isFav = !!favoritos[item.i];
+    return '<div class="palette-row">' +
+      '<span class="palette-row-num">' + num + '</span>' +
+      '<span class="palette-row-swatches">' + item.p.colors.map(function(c){ return '<span class="swatch-dot" style="background:' + c + ';"></span>'; }).join('') + '</span>' +
+      '<span class="palette-row-body">' +
+        '<span class="palette-row-name" style="display:block;">' + item.p.name + '</span>' +
+        '<span class="palette-row-desc">' + item.p.desc + '</span>' +
+      '</span>' +
+      '<button class="fav-star ' + (isFav ? 'active' : '') + '" data-fav="' + item.i + '">' + (isFav ? '★' : '☆') + '</button>' +
+    '</div>';
+  }).join('');
+  listEl.querySelectorAll('[data-fav]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = btn.getAttribute('data-fav');
+      favoritos[idx] = !favoritos[idx];
+      renderPaletaList();
+    });
+  });
+}
+
+VIEWS.erros = function(){
+  var erros = [
+    ['Linha muito apertada, tecido franzindo', 'Solte um pouco a tensão da linha a cada 3-4 pontos e ajuste o tecido no bastidor antes de continuar.'],
+    ['Nós aparecendo do lado da frente', 'Comece e termine a linha com pontos de ancoragem escondidos entre as camadas, não com nó.'],
+    ['Pontos com tamanhos desiguais', 'Marque o espaçamento no tecido com régua antes de bordar, principalmente em padrões geométricos.'],
+    ['Tecido franzido no bastidor', 'Estique o tecido igualmente nas quatro direções antes de fechar o aro.'],
+    ['Linha embaraçando durante o ponto', 'Use fios mais curtos (até 50cm) e deixe a agulha girar livremente de vez em quando.']
+  ];
+  return pageHeader('Guia de Erros e Correções', '18 erros comuns do bordado japonês, com diagnóstico, correção e prevenção.') +
+    '<div class="faq-list">' +
+      erros.map(function(e, i){
+        return '<div class="faq-item" data-idx="' + i + '">' +
+          '<button class="faq-q">' + icon('warning') + '&nbsp;&nbsp;' + e[0] + '<span class="chev">▾</span></button>' +
+          '<div class="faq-a"><div class="faq-a-inner"><span class="fix">Como corrigir:</span> ' + e[1] + '</div></div>' +
+        '</div>';
+      }).join('') +
+    '</div>';
+};
+
+VIEWS.materiais = function(){
+  return pageHeader('Materiais essenciais', 'O que ter à mão — e o que evitar.') +
+    '<div class="materiais-cols">' +
+      '<div class="materiais-box">' +
+        '<h3>✓ Recomendado</h3>' +
+        '<ul>' +
+          '<li>🧵 Linha de algodão para Sashiko (branca e colorida)</li>' +
+          '<li>🪡 Agulha longa de Sashiko</li>' +
+          '<li>🧶 Tecido de algodão ou linho de trama média</li>' +
+          '<li>⭕ Bastidor de madeira 15-20cm</li>' +
+          '<li>✂️ Tesoura pequena de bordado</li>' +
+        '</ul>' +
+      '</div>' +
+      '<div class="materiais-box avoid">' +
+        '<h3>✕ Evitar no início</h3>' +
+        '<ul>' +
+          '<li>Tecidos muito elásticos ou sintéticos escorregadios</li>' +
+          '<li>Linhas muito finas (dificultam ver o ponto)</li>' +
+          '<li>Agulhas muito curtas ou muito grossas</li>' +
+        '</ul>' +
+      '</div>' +
+    '</div>';
+};
+
+VIEWS.perfil = function(){
+  var email = 'seu-email@exemplo.com';
+  var initial = 'M';
+  return pageHeader('Perfil', null, true) +
+    '<div class="profile-avatar">' + initial + '</div>' +
+    '<p class="profile-email">' + email + '</p>' +
+    '<div class="profile-row">Editar dados da conta<span class="arrow">→</span></div>' +
+    '<div class="profile-row">Alterar senha<span class="arrow">→</span></div>' +
+    '<div class="profile-row">Notificações<span class="arrow">→</span></div>' +
+    '<div class="profile-row">Central de ajuda<span class="arrow">→</span></div>' +
+    '<div class="profile-row danger">Sair da conta<span class="arrow">→</span></div>';
+};
+
+/* ================= View-specific bindings ================= */
+function bindView(id){
+  if(id === 'inicio') bindInicio();
+  if(id === 'aprender'){
+    document.querySelectorAll('[data-module]').forEach(function(el){
+      el.addEventListener('click', function(){
+        currentModuleIndex = parseInt(el.getAttribute('data-module'), 10);
+        currentView = 'moduleDetail';
+        var content = document.getElementById('content');
+        content.innerHTML = VIEWS.moduleDetail();
+        window.scrollTo({top:0, behavior:'instant'});
+      });
+    });
+  }
+  if(id === 'erros'){
+    document.querySelectorAll('.faq-item').forEach(function(item){
+      var q = item.querySelector('.faq-q');
+      var a = item.querySelector('.faq-a');
+      q.addEventListener('click', function(){
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(other){
+          other.classList.remove('open');
+          other.querySelector('.faq-a').style.maxHeight = null;
+        });
+        if(!isOpen){
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+  if(id === 'moldes'){
+    renderMoldesGrid();
+    document.getElementById('moldeSearch').addEventListener('input', function(e){
+      moldesFiltro = e.target.value;
+      renderMoldesGrid();
+    });
+    document.querySelectorAll('[data-cat]').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        moldesCategoria = chip.getAttribute('data-cat');
+        document.querySelectorAll('[data-cat]').forEach(function(c){ c.classList.remove('active'); });
+        chip.classList.add('active');
+        renderMoldesGrid();
+      });
+    });
+  }
+  if(id === 'paletas'){
+    renderPaletaList();
+    document.getElementById('paletaSearch').addEventListener('input', function(e){
+      paletaFiltro = e.target.value;
+      renderPaletaList();
+    });
+    document.querySelectorAll('[data-aba]').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        paletaAba = chip.getAttribute('data-aba');
+        document.querySelectorAll('[data-aba]').forEach(function(c){ c.classList.remove('active'); });
+        chip.classList.add('active');
+        renderPaletaList();
+      });
+    });
+  }
+}
+
+/* ================= Boot ================= */
+goToView('inicio');
+</script>
+</body>
+</html>
